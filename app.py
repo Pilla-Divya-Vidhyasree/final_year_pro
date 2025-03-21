@@ -22,19 +22,19 @@ label_encoder = joblib.load("label_encoder.pkl")
 #urls
 
 dense_url = "https://drive.google.com/uc?id=1RJKkFavESsJG5nvM1_Z1CQTtc3hqxL-e"
-inception_url = "https://drive.google.com/uc?id=1ifZ4E0ouUmcNylNbVflHIJ4u38nS1TTX"
+#inception_url = "https://drive.google.com/uc?id=1ifZ4E0ouUmcNylNbVflHIJ4u38nS1TTX"
 vgg_url = "https://drive.google.com/uc?id=1gwsV2q8gLfoEJtM78gk1IRbmu_NtmIuQ"
 
 dense_path = "densemodel.h5"
-inception_path = "inception_model.h5"
+#inception_path = "inception_model.h5"
 vgg_path = "vgg_model.h5"
 
 if not os.path.exists(dense_path):
     gdown.download(dense_url, dense_path, quiet=False)
     print("dense Model downloaded successfully!")
-if not os.path.exists(inception_path):
-    gdown.download(inception_url, inception_path, quiet=False)
-    print("inception Model downloaded successfully!")
+#if not os.path.exists(inception_path):
+#    gdown.download(inception_url, inception_path, quiet=False)
+#    print("inception Model downloaded successfully!")
 if not os.path.exists(vgg_path):
     gdown.download(vgg_url, vgg_path, quiet=False)
     print("vgg Model downloaded successfully!")
@@ -45,8 +45,8 @@ if not os.path.exists(vgg_path):
 vgg_model1 = tf.keras.models.load_model(vgg_path)
 vgg_model1.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-inception_model1 = tf.keras.models.load_model(inception_path)
-inception_model1.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+#inception_model1 = tf.keras.models.load_model(inception_path)
+#inception_model1.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 densenet_model1 = tf.keras.models.load_model(dense_path)
 densenet_model1.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
@@ -106,11 +106,11 @@ def ensemble_prediction(image_path):
 
     # Get predictions from each model
     vgg_pred = vgg_model1.predict(img)
-    inception_pred = inception_model1.predict(img)
+    #inception_pred = inception_model1.predict(img)
     densenet_pred = densenet_model1.predict(img)
 
     # Average the predictions (ensemble technique)
-    final_pred = (vgg_pred + inception_pred + densenet_pred) / 3
+    final_pred = (vgg_pred + densenet_pred) / 2
     predicted_class = np.argmax(final_pred, axis=1)
     predicted_class_index = predicted_class[0]  # Get the scalar value
     predicted_class_name = class_mapping.get(predicted_class_index, "Unknown Class")
