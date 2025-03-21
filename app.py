@@ -40,9 +40,7 @@ if not os.path.exists(vgg_path):
     print("vgg Model downloaded successfully!")
 
 # Load Leaf Disease Detection Models
-vgg_model = tf.keras.models.load_model("VGG_Plant_Diseases.h5")
-inception_model = tf.keras.models.load_model("InceptionV3_Plant_Diseases_updated.h5")
-densenet_model = tf.keras.models.load_model("DenseNet_Plant_Diseases.h5")
+
 
 vgg_model1 = tf.keras.models.load_model(vgg_path)
 vgg_model1.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
